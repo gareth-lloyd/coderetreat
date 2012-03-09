@@ -21,7 +21,7 @@ TILES = {
     (1, 0, 0, 1) : u'┘',
 #   (0, 1, 0, 0) : u'╶',
     (1, 1, 1, 1) : u'┼',
-    (0, 0, 0, 0) : u'#',
+    (0, 0, 0, 0) : u'\u25A2',
 #   (0, 0, 1, 0) : u'╷',
     (0, 1, 0, 1) : u'─',
     (1, 1, 1, 0) : u'├',
@@ -40,7 +40,9 @@ class Tile(object):
         return TILES[(tuple(self.edges.values()))]
 
 def random_tile():
-    return Tile(*random.choice(TILES.keys())
+    if random.random() > .5:
+        return Tile(0, 0, 0, 0)
+    return Tile(*random.choice(TILES.keys()))
 
 def alter_position(position, delta):
     return (position[0] + delta[0], position[1] + delta[1])
@@ -58,16 +60,16 @@ class Surface(object):
         for position, tile in self.tiles.iteritems():
             for delta in (N, E, S, W):
                 desired = alter_position(position, delta)
-                if desired in self.tiles:
-                    continue
-                else:
-                    try:
-                        self.place(new_tile, desired)
-                        return
-                    except ValueError:
-                        pass
+                try:
+                    self.place(new_tile, desired)
+                    return
+                except ValueError:
+                    pass
 
     def place(self, new_tile, desired_position):
+        if desired_position in self.tiles:
+            raise ValueError("Can't place here")
+
         for direction in (N, E, S, W):
             test_position = alter_position(desired_position, direction)
             if test_position in self.tiles:
