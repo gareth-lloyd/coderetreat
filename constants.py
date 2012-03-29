@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 FIELD = 0
 ROAD = 1
+CASTLE = 2
 
 # Directions defined as positive or negative movements in the
 # x- and y-axis, respectively
@@ -9,7 +10,7 @@ E  =  (1, 0)
 S  =  (0, -1)
 W  =  (-1, 0)
 
-TYPES = ('cloisters', 'straight', 'bend', 't-junction')
+TYPES = ('cloisters', 'straight', 'bend', 't-junction', '1castle')
 
 # These are some useful unicode characters, organized according to
 # a rudimentary coding system which you can use or improve.
@@ -29,6 +30,11 @@ TILES = {
     ( ROAD,  ROAD, FIELD,  ROAD) : u'┴',
     ( ROAD, FIELD,  ROAD,  ROAD) : u'┤',
     (FIELD,  ROAD,  ROAD,  ROAD) : u'┬',
+
+    (CASTLE, FIELD, FIELD, FIELD): u'▔',
+    (FIELD, CASTLE, FIELD, FIELD): u'▕',
+    (FIELD, FIELD, CASTLE, FIELD): u'▁',
+    (FIELD, FIELD, FIELD, CASTLE): u'▏',
 }
 
 ORIENTATIONS = {
@@ -68,6 +74,12 @@ TILE_ORIENTATIONS = {
         2: ( ROAD, FIELD,  ROAD,  ROAD),
         3: (FIELD,  ROAD,  ROAD,  ROAD),
     },
+    '1castle': {
+        0: (CASTLE, FIELD, FIELD, FIELD),
+        1: (FIELD, CASTLE, FIELD, FIELD),
+        2: (FIELD, FIELD, CASTLE, FIELD),
+        3: (FIELD, FIELD, FIELD, CASTLE),
+    }
 }
 
 class RotatableTile(object):
