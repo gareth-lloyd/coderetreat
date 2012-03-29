@@ -2,6 +2,14 @@
 import locale, curses, time
 
 class Display(object):
+    """
+    Example Usage:
+    with Display() as display:
+        while True:
+            for x, y, tile in tiles:
+                display.place_char(unicode(tile), x, y)
+            display.refresh(sleep_time=0.1)
+    """
     def __enter__(self):
         locale.setlocale(locale.LC_ALL, '')
         self.encoding = locale.getpreferredencoding()
@@ -36,18 +44,3 @@ class Display(object):
         self.window.refresh()
         time.sleep(sleep_time)
         self.window.clear()
-
-
-if __name__ == '__main__':
-    """Dumb code to demonstrate use of a Display object.
-    """
-    from constants import PERMUTED_TILES
-    import random
-    with Display() as display:
-        while True:
-            tile = random.choice(PERMUTED_TILES.values())
-            x, y = random.randint(-40, 40), random.randint(-40, 40)
-            display.place_char(unicode(tile), x, y)
-
-            display.refresh()
-

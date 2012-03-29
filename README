@@ -1,1 +1,7 @@
-experiments for the second conversocial code retreat
+The second conversocial code retreat. We're going to do something other than
+conway, namely Carcassonne!
+
+There's a few starter bits and pieces to help us get off the mark quickly.
+There are some useful unicode characters in constants.py. In display.py,
+you'll find a class Display that abstracts away from the curses library
+to make it trival to write unicode characters to the screen.
